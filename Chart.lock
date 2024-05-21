@@ -1,0 +1,12 @@
+dependencies:
+- name: spin-operator
+  repository: oci://ghcr.io/spinkube/charts
+  version: 0.1.0
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.14.3
+- name: kwasm-operator
+  repository: http://kwasm.sh/kwasm-operator/
+  version: 0.2.3
+digest: sha256:62ebb33e2a0aae36d541b0d6a5e9a3b604da9494e9afca85d35eca4dc8997afa
+generated: "2024-05-21T16:08:33.998267-07:00"

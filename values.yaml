@@ -1,0 +1,9 @@
+spin-operator:
+  enabled: true
+
+cert-manager:
+  installCRDs: true
+
+kwasm-operator:
+  enabled: true
+  installerImage: ghcr.io/spinkube/containerd-shim-spin/node-installer:v0.14.1
