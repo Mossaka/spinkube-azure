@@ -32,6 +32,7 @@ dependencies:
   - name: cert-manager
     version: 1.14.3
     repository: "https://charts.jetstack.io"
+    condition: cert-manager.enabled
   - name: kwasm-operator
     version: 0.2.3
     repository: "http://kwasm.sh/kwasm-operator/"

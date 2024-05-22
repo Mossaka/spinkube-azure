@@ -8,5 +8,5 @@ dependencies:
 - name: kwasm-operator
   repository: http://kwasm.sh/kwasm-operator/
   version: 0.2.3
-digest: sha256:62ebb33e2a0aae36d541b0d6a5e9a3b604da9494e9afca85d35eca4dc8997afa
-generated: "2024-05-21T16:08:33.998267-07:00"
+digest: sha256:49077c87e3e34d6ea0c6a61011e34df0e496e5197779eb20c0af512df7e3ce88
+generated: "2024-05-22T00:43:57.481076949Z"

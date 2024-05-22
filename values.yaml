@@ -2,7 +2,7 @@ spin-operator:
   enabled: true
 
 cert-manager:
-  installCRDs: true
+  enabled: true
 
 kwasm-operator:
   enabled: true
