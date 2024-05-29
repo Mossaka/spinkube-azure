@@ -1,0 +1,41 @@
+# https://github.com/jpflueger/spinkube-oneclick/blob/main/templates/shimexecutor-post-install-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-post-install"
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: post-install-job
+        image: "bitnami/kubectl:1.30.0"
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c"]
+        args:
+          - |-
+              cat <<EOF | kubectl apply -f -
+              apiVersion: core.spinoperator.dev/v1alpha1
+              kind: SpinAppExecutor
+              metadata:
+                name: containerd-shim-spin
+              spec:
+                createDeployment: true
+                deploymentConfig:
+                  runtimeClassName: wasmtime-spin-v2
+              EOF

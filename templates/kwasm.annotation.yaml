@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kwasm-annotate-nodes
+spec:
+  template:
+    metadata:
+      name: kwasm-annotate-nodes
+    spec:
+      serviceAccountName: kwasm-annotate-sa
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command: ["kubectl"]
+        args: ["annotate", "node", "--all", "kwasm.sh/kwasm-node=true"]
+      restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kwasm-annotate-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kwasm-annotate-clusterrole
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kwasm-annotate-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kwasm-annotate-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: kwasm-annotate-sa
+  namespace: default

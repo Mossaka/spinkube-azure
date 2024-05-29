@@ -10,21 +10,21 @@ To create a new AKS cluster, you can use the following command:
 az login --use-device-code
 export RG=spinkube-demo
 az group create --name $(echo $RG) --location eastus2
-az aks create --name spinkube-aks \
+az aks create --name spinkube-azure-$(echo $RG) \
     --resource-group $(echo $RG) \
     --node-count 1 \
     --tier free \
     --generate-ssh-keys
-az aks get-credentials --resource-group $(echo $RG) --name spinkube-aks
+az aks get-credentials --resource-group $(echo $RG) --name spinkube-azure-$(echo $RG)
 kubectl config current-context
 ```
 
 ## Install SpinKube
 ```bash
-helm package .
-helm install spinkube ./spinkube-demo-0.1.0.tgz
+helm install spinkube .
 
-kubectl annotate node --all kwasm.sh/kwasm-node=true
+# wait for the pods to be ready
+
 kubectl apply -f spin-operator.shim-executor.yaml
 ```
 
